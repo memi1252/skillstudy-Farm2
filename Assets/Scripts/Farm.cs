@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum FarmStats
 {
     Plan,
     Field,
-    Farm
+    Farm,
+    autoGet
 }
 
 public enum GrowthStats
@@ -63,6 +66,9 @@ public class Farm : MonoBehaviour
     public int cropMinhumidity { get; private set; }
     public float cropMaxhumidity { get; private set; }
 
+    public GameObject autoGetObject;
+    public GameObject[] FamrTools;
+
 
     private void Awake()
     {
@@ -97,11 +103,21 @@ public class Farm : MonoBehaviour
                 FarmReset();
             }
         }
+
+        if(growCurrentTime < 0)
+        {
+            growCurrentTime = 0;
+        }
         
         if (farmStats == FarmStats.Farm)
         {
             if (growCheck())
             {
+                if(tile.animalCount != 0 && !tile.greenhouse)
+                {
+                    growCurrentTime += -Time.deltaTime;
+                    return;
+                }
                 switch (GameManager.Instance.currentWeather)
                 {
                     case Weather.lucidity:
@@ -337,7 +353,26 @@ public class Farm : MonoBehaviour
 
     public void FarmReset()
     {
+        if (GameManager.Instance.nomalGet)
+        {
+            var tool = Instantiate(FamrTools[0]);
+            tool.transform.position = transform.position + new Vector3(0, 1, 0);
+            StartCoroutine(Farmreset(tool));
+        }
+        else
+        {
+            var tool = Instantiate(FamrTools[1]);
+            tool.transform.position = transform.position + new Vector3(0, 1, 0);
+            StartCoroutine(Farmreset(tool));
+        }
+    }
+
+    IEnumerator Farmreset(GameObject tool)
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        Destroy(tool);
         Plan();
+        tile.Get();
         growthStats = GrowthStats.Seed;
         foreach (var corn in cropObjects)
         {
@@ -508,6 +543,13 @@ public class Farm : MonoBehaviour
     public void StatsOpen()
     {
         GameManager.Instance.farmStatsUI.Show(this);
+    }
+
+    
+
+    public void OnMouseEnter()
+    {
+    Camera.main.transform.GetComponent<PhysicsRaycaster>().enabled = true;
     }
 
 }

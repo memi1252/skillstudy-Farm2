@@ -125,6 +125,7 @@ public class FarmStatsUI : MonoBehaviour
     public void Show(Farm farm)
     {
         gameObject.SetActive(true);
+        //GameManager.Instance.CursorShow(true);
         StatsOpen();
         statsWindow.SetActive(true);
         seedWindow.SetActive(false);
@@ -212,8 +213,12 @@ public class FarmStatsUI : MonoBehaviour
     }
 
     public void FieldAndSeedAndGet()
-    {
-        if (farm.farmStats == FarmStats.Plan)
+    {   
+        if(farm.farmStats == FarmStats.autoGet)
+        {
+            return;
+        }
+        else if (farm.farmStats == FarmStats.Plan)
         {
             farm.Feild();
             fieldAndSeedAndGetText.text = $"씨앗 선택";
@@ -233,31 +238,96 @@ public class FarmStatsUI : MonoBehaviour
 
     public void Seed(int index)
     {
-
         switch (index)
         {
             case 1:
-                farm.Seed(SeedType.Broccoli);
-                break;
+                if(GameManager.Instance.seed1 > 0)
+                {
+                    GameManager.Instance.seed1--;
+                    farm.Seed(SeedType.Broccoli);
+                    farm.GrowthStage(GrowthStats.Seed);
+                    farm.farmStats = FarmStats.Farm;
+                    fieldAndSeedAndGetText.text = $"수확 하기";
+                    fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
+                    statsWindow.SetActive(true);
+                    seedWindow.SetActive(false);
+
+                }
+                else
+                {
+                    GameManager.Instance.messageUI.add("브로콜리의 씨앗이 부족합니다",Color.red, true);
+                }
+                    break;
             case 2:
-                farm.Seed(SeedType.Carrot);
+                if (GameManager.Instance.seed2 > 0)
+                {
+                    GameManager.Instance.seed2--;
+                    farm.Seed(SeedType.Carrot);
+                    farm.GrowthStage(GrowthStats.Seed);
+                    farm.farmStats = FarmStats.Farm;
+                    fieldAndSeedAndGetText.text = $"수확 하기";
+                    fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
+                    statsWindow.SetActive(true);
+                    seedWindow.SetActive(false);
+                }
+                else
+                {
+                    GameManager.Instance.messageUI.add("당근의 씨앗이 부족합니다", Color.red, true);
+                }
                 break;
             case 3:
-                farm.Seed(SeedType.Cauiliflower);
+                if (GameManager.Instance.seed3 > 0)
+                {
+                    GameManager.Instance.seed3--;
+                    farm.Seed(SeedType.Cauiliflower);
+                    farm.GrowthStage(GrowthStats.Seed);
+                    farm.farmStats = FarmStats.Farm;
+                    fieldAndSeedAndGetText.text = $"수확 하기";
+                    fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
+                    statsWindow.SetActive(true);
+                    seedWindow.SetActive(false);
+                }
+                else
+                {
+                    GameManager.Instance.messageUI.add("양배추의 씨앗이 부족합니다", Color.red, true);
+                }
                 break;
             case 4:
-                farm.Seed(SeedType.Corn);
+                if (GameManager.Instance.seed4 > 0)
+                {
+                    GameManager.Instance.seed4--;
+                    farm.Seed(SeedType.Corn);
+                    farm.GrowthStage(GrowthStats.Seed);
+                    farm.farmStats = FarmStats.Farm;
+                    fieldAndSeedAndGetText.text = $"수확 하기";
+                    fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
+                    statsWindow.SetActive(true);
+                    seedWindow.SetActive(false);
+                }
+                else
+                {
+                    GameManager.Instance.messageUI.add("옥수수의 씨앗이 부족합니다", Color.red, true);
+                }
                 break;
             case 5:
-                farm.Seed(SeedType.Mashroom);
+                if (GameManager.Instance.seed5 > 0)
+                {
+                    GameManager.Instance.seed5--;
+                    farm.Seed(SeedType.Mashroom);
+                    farm.GrowthStage(GrowthStats.Seed);
+                    farm.farmStats = FarmStats.Farm;
+                    fieldAndSeedAndGetText.text = $"수확 하기";
+                    fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
+                    statsWindow.SetActive(true);
+                    seedWindow.SetActive(false);
+                }
+                else
+                {
+                    GameManager.Instance.messageUI.add("버섯의 씨앗이 부족합니다", Color.red, true);
+                }
                 break;
         }
-        farm.GrowthStage(GrowthStats.Seed);
-        farm.farmStats = FarmStats.Farm;
-        fieldAndSeedAndGetText.text = $"수확 하기";
-        fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
-        statsWindow.SetActive(true);
-        seedWindow.SetActive(false);
+        
     }
 
     public void Water()
@@ -268,13 +338,29 @@ public class FarmStatsUI : MonoBehaviour
             if (GameManager.Instance.nomalWatergun)
             {
                 farm.tile.humidity += farm.tile.humidity * 0.5f;
+                var water = Instantiate(farm.tile.waterBukkits[0]);
+                water.transform.position = farm.tile.transform.position + new Vector3(0, 2, 0);
+                StartCoroutine(waterDestroy(water));
             }
             else
             {
                 farm.tile.humidity += farm.tile.humidity * 0.2f;
+                var water = Instantiate(farm.tile.waterBukkits[1]);
+                water.transform.position = farm.tile.transform.position + new Vector3(0, 2, 0);
+                StartCoroutine(waterDestroy(water));
             }
         }
+        else
+        {
+            GameManager.Instance.messageUI.add("물이 부족합니다", Color.red, true);
+        }
 
+    }
+
+    IEnumerator waterDestroy(GameObject water)
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        Destroy(water);
     }
 
     public void GreenHouse()
@@ -283,6 +369,7 @@ public class FarmStatsUI : MonoBehaviour
         {
             greenHouseText.text = "비닐하우스 설치";
             farm.tile.greenhouse = false;
+            farm.tile.greenHouseObject.SetActive(false);
         }
         else
         {
@@ -291,6 +378,11 @@ public class FarmStatsUI : MonoBehaviour
                 GameManager.Instance.greenHouseCount--;
                 greenHouseText.text = "비닐하우스 제거";
                 farm.tile.greenhouse = true;
+                farm.tile.greenHouseObject.SetActive(true);
+            }
+            else
+            {
+                GameManager.Instance.messageUI.add("비닐하우스가 부족합니다", Color.red, true);
             }
         }
     }
@@ -301,15 +393,60 @@ public class FarmStatsUI : MonoBehaviour
         {
             autoGetText.text = "자동수확기 설치";
             farm.tile.autoGet = false;
+            farm.tile.autoGetObject.SetActive(false);
         }
         else
         {
+            if(farm.farmStats == FarmStats.Field || farm.farmStats == FarmStats.Farm)
+            {
+                return;
+            }
             if (GameManager.Instance.autoGetCount > 0)
             {
                 GameManager.Instance.autoGetCount--;
                 autoGetText.text = "자동수확기 제거";
+                farm.tile.autoGetObject = farm.autoGetObject;
+                farm.farmStats = FarmStats.autoGet;
+                farm.tile.autoGetObject.SetActive(true);
                 farm.tile.autoGet = true;
             }
+            else
+            {
+                GameManager.Instance.messageUI.add("자동수확기가 부족합니다", Color.red, true);
+            }
+        }
+    }
+
+    public void AnimalGet()
+    {
+        if(GameManager.Instance.animalGetCount > 0)
+        {
+            int count = Random.Range(1, 4);
+            for (int i = 0; i < count; i++)
+            {
+                if (farm.tile.animals.Count ==0)
+                {
+                    return;
+                }
+                farm.tile.animalCount--;
+                Destroy(farm.tile.animals[0]);
+                farm.tile.animals.RemoveAt(0);
+            }
+            float randomValue = Random.value;
+            if(GameManager.Instance.animalDestroyPercent > randomValue)
+            {
+                GameManager.Instance.animalGetCount--;
+                GameManager.Instance.animalDestroyPercent = 0;
+                GameManager.Instance.messageUI.add("포획기가 파괴되었습니다", Color.red, true);
+            }
+            else
+            {
+                GameManager.Instance.animalDestroyPercent += 0.2f;
+            }
+        }
+        else
+        {
+            GameManager.Instance.messageUI.add("포획기가 부족합니다", Color.red, true);
         }
     }
 }

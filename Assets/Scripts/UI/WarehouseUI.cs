@@ -62,27 +62,27 @@ public class WarehouseUI : MonoBehaviour
             {
                 boxslot.itemName = boxItem.Name;
                 boxslot.sell = boxItem.sell;
-                if(boxslot.itemName == "≥ÛªÁøÎ ¿œπ› µµ±∏")
+                if(boxslot.itemName == "ÎÜçÏÇ¨Ïö© ÏùºÎ∞ò ÎèÑÍµ¨")
                 {
                     if (!GameManager.Instance.nomalGet)
                     {
                         boxslot.gameObject.SetActive(false);
                     }
-                }else if (boxslot.itemName == "≥ÛªÁøÎ ∞Ì±ﬁ µµ±∏")
+                }else if (boxslot.itemName == "ÎÜçÏÇ¨Ïö© Í≥†Í∏â ÎèÑÍµ¨")
                 {
                     if (GameManager.Instance.nomalGet)
                     {
                         boxslot.gameObject.SetActive(false);
                     }
                 }
-                else if (boxslot.itemName == "¿œπ› π∞ª—∏Æ∞≥")
+                else if (boxslot.itemName == "ÏùºÎ∞ò Î¨ºÎøåÎ¶¨Í∞ú")
                 {
                     if (!GameManager.Instance.nomalWatergun)
                     {
                         boxslot.gameObject.SetActive(false);
                     }
                 }
-                else if (boxslot.itemName == "∞Ì±ﬁ π∞ª—∏Æ∞≥")
+                else if (boxslot.itemName == "Í≥†Í∏â Î¨ºÎøåÎ¶¨Í∞ú")
                 {
                     if (GameManager.Instance.nomalWatergun)
                     {

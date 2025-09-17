@@ -30,8 +30,12 @@ public class GameManager : MonoBehaviour
 
     public Weather currentWeather;
     public Weather nextWeather;
+    public GameObject[] weathers;
+    public Material[] weatherMats;
 
     public int money = 0;
+    public float fatigue = 0;
+    private float maxFatigue = 100;
 
     public bool nomalWatergun = true;
     public int watergunCount = 0;
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
     public bool sleep = false;
     public bool dontMove = false;
     public bool clear = false;
+    public bool dontWork = false;
 
 
     public int greenHouseCount = 0;
@@ -66,6 +71,8 @@ public class GameManager : MonoBehaviour
     public MessageUI messageUI;
     public Player player;
     public GameObject[] allTile;
+    public gameClearUI clearUI;
+    public Terrain terrain;
 
     private void Awake()
     {
@@ -83,22 +90,42 @@ public class GameManager : MonoBehaviour
     {
         int WeatherIndex = Random.Range(0, 5);
         doubleLucidity = false;
+        for (int i = 0; i < weathers.Length; i++)
+        {
+            weathers[i].SetActive(false);
+        }
+        weathers[WeatherIndex].SetActive(true);
         switch (WeatherIndex)
         {
             case 0:
                 currentWeather = Weather.lucidity;
+                RenderSettings.skybox = weatherMats[0];
+                //terrain.terrainData.wavingGrassSpeed = 0.2f;
+                terrain.terrainData.wavingGrassStrength = 0.5f;
                 break;
             case 1:
                 currentWeather = Weather.cloud;
+                RenderSettings.skybox = weatherMats[1];
+                //terrain.terrainData.wavingGrassSpeed = 0.2f;
+                terrain.terrainData.wavingGrassStrength = 0.5f;
                 break;
             case 2:
                 currentWeather = Weather.rain;
+                RenderSettings.skybox = weatherMats[1];
+                //terrain.terrainData.wavingGrassSpeed = 0.f;
+                terrain.terrainData.wavingGrassStrength = 0.7f;
                 break;
             case 3:
                 currentWeather = Weather.storm;
+                RenderSettings.skybox = weatherMats[1];
+                //terrain.terrainData.wavingGrassSpeed = 1;
+                terrain.terrainData.wavingGrassStrength = 0.1f;
                 break;
             case 4:
                 currentWeather = Weather.stone;
+                RenderSettings.skybox = weatherMats[1];
+                //terrain.terrainData.wavingGrassSpeed = 0.7f;
+                terrain.terrainData.wavingGrassStrength = 0.7f;
                 break;
         }
         WeatherIndex = Random.Range(0, 5);
@@ -124,9 +151,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(money >= 1000000)
+        if (fatigue < 0)
+        {
+            fatigue = 0;
+        }
+
+        if (!doubleLucidity)
+        {
+            if (fatigue > maxFatigue)
+            {
+                fatigue = maxFatigue;
+            }   
+        }
+        if (fatigue == 0)
+        {
+            dontWork = true;
+        }
+        else
+        {
+            dontWork = false;
+        }
+        if(money >= 1000000 && !clear)
         {
             clear = true;
+            //if(RankManager.Instance.data)
+            clearUI.Show();
         }
         if (!sleep || !clear)
         {

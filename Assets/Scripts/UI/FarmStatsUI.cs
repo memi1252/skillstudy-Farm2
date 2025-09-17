@@ -33,75 +33,75 @@ public class FarmStatsUI : MonoBehaviour
                 switch (farm.growthStats)
                 {
                     case GrowthStats.Seed:
-                        growText.text = "¹ß¾Æ±â";
+                        growText.text = "ë°œì•„ê¸°";
                         break;
                     case GrowthStats.Sprout:
-                        growText.text = "¼ºÀå±â";
+                        growText.text = "ì„±ì¥ê¸°";
                         break;
                     case GrowthStats.Mature:
-                        growText.text = "¼º¼÷±â";
+                        growText.text = "ì„±ìˆ™ê¸°";
                         break;
                 }
-                currentHumidityText.text = $"ÇöÀç ½Àµµ : {farm.tile.humidity}%";
-                farmNameText.text = $"ÀÛ¹° : {farm.seedType}";
+                currentHumidityText.text = $"í˜„ì¬ ìŠµë„ : {farm.tile.humidity}%";
+                farmNameText.text = $"ì‘ë¬¼ : {farm.seedType}";
                 string weathers = "";
                 foreach (var weather in farm.cropWeathers)
                 {
                     string ss = "";
                     if (weather == Weather.lucidity)
                     {
-                        ss = "¸¼À½";
+                        ss = "ë§‘ìŒ";
                     } else if (weather == Weather.cloud)
                     {
-                        ss = "Èå¸²";
+                        ss = "íë¦¼";
                     } else if (weather == Weather.rain)
                     {
-                        ss = "ºñ";
+                        ss = "ë¹„";
                     } else if (weather == Weather.storm)
                     {
-                        ss = "ÆøÇ³";
+                        ss = "í­í’";
                     } else if (weather == Weather.stone)
                     {
-                        ss = "¿ì¹Ú";
+                        ss = "ìš°ë°•";
                     }
                     weathers += ss;
                     weathers += ", ";
                 }
-                weathersText.text = $"ÀûÇÕ ³¯¾¾ : {weathers}";
-                timeText.text = $"½Ã°£´ë : {farm.cropMinTime}½Ã ~ {farm.cropMaxTime}½Ã";
-                humidityText.text = $"ÃÖÀû ½Àµµ : {farm.cropMinhumidity}% ~ {farm.cropMaxhumidity}%";
+                weathersText.text = $"ì í•© ë‚ ì”¨ : {weathers}";
+                timeText.text = $"ì‹œê°„ëŒ€ : {farm.cropMinTime}ì‹œ ~ {farm.cropMaxTime}ì‹œ";
+                humidityText.text = $"ìµœì  ìŠµë„ : {farm.cropMinhumidity}% ~ {farm.cropMaxhumidity}%";
                 if (farm.growCheck())
                 {
-                    growSpeedText.text = $"¼ºÀå ¼Óµµ : 1";
+                    growSpeedText.text = $"ì„±ì¥ ì†ë„ : 1";
                 }
                 else if (farm.tile.humidity <= 30 || farm.tile.humidity >= 80)
                 {
-                    growSpeedText.text = $"¼ºÀå ¼Óµµ : -1";
+                    growSpeedText.text = $"ì„±ì¥ ì†ë„ : -1";
                 }
                 else
                 {
                     switch (GameManager.Instance.currentWeather)
                     {
                         case Weather.lucidity:
-                            growSpeedText.text = $"¼ºÀå ¼Óµµ : 2";
+                            growSpeedText.text = $"ì„±ì¥ ì†ë„ : 2";
                             break;
                         case Weather.cloud:
-                            growSpeedText.text = $"¼ºÀå ¼Óµµ : 1";
+                            growSpeedText.text = $"ì„±ì¥ ì†ë„ : 1";
                             break;
                         case Weather.rain:
-                            growSpeedText.text = $"¼ºÀå ¼Óµµ : 2";
+                            growSpeedText.text = $"ì„±ì¥ ì†ë„ : 2";
                             break;
                         case Weather.storm:
-                            growSpeedText.text = $"¼ºÀå ¼Óµµ : -1";
+                            growSpeedText.text = $"ì„±ì¥ ì†ë„ : -1";
                             break;
                         case Weather.stone:
-                            growSpeedText.text = $"¼ºÀå ¼Óµµ : 1";
+                            growSpeedText.text = $"ì„±ì¥ ì†ë„ : 1";
                             break;
                     }
 
                     if (!farm.growCheck())
                     {
-                        growSpeedText.text = $"¼ºÀå ¼Óµµ : 0";
+                        growSpeedText.text = $"ì„±ì¥ ì†ë„ : 0";
                     }
                 }
 
@@ -110,12 +110,12 @@ public class FarmStatsUI : MonoBehaviour
             {
                 growSlider.value = 0;
                 growText.text = "";
-                farmNameText.text = $"ÀÛ¹° : ¾øÀ½";
-                weathersText.text = $"ÀûÇÕ ³¯¾¾ : ¾øÀ½";
-                timeText.text = $"½Ã°£´ë : ¾øÀ½";
-                currentHumidityText.text = $"ÇöÀç ½Àµµ : {farm.tile.humidity}%";
-                humidityText.text = $"ÃÖÀû ½Àµµ : ¾øÀ½";
-                growSpeedText.text = $"¼ºÀå ¼Óµµ : ¾øÀ½";
+                farmNameText.text = $"ì‘ë¬¼ : ì—†ìŒ";
+                weathersText.text = $"ì í•© ë‚ ì”¨ : ì—†ìŒ";
+                timeText.text = $"ì‹œê°„ëŒ€ : ì—†ìŒ";
+                currentHumidityText.text = $"í˜„ì¬ ìŠµë„ : {farm.tile.humidity}%";
+                humidityText.text = $"ìµœì  ìŠµë„ : ì—†ìŒ";
+                growSpeedText.text = $"ì„±ì¥ ì†ë„ : ì—†ìŒ";
             }
 
             if (farm.growthStats == GrowthStats.Mature)
@@ -137,19 +137,19 @@ public class FarmStatsUI : MonoBehaviour
         this.farm = farm;
         if (farm.tile.greenhouse)
         {
-            greenHouseText.text = "ºñ´ÒÇÏ¿ì½º Á¦°Å";
+            greenHouseText.text = "ë¹„ë‹í•˜ìš°ìŠ¤ ì œê±°";
         }
         else
         {
-            greenHouseText.text = "ºñ´ÒÇÏ¿ì½º ¼³Ä¡";
+            greenHouseText.text = "ë¹„ë‹í•˜ìš°ìŠ¤ ì„¤ì¹˜";
         }
         if (farm.tile.autoGet)
         {
-            autoGetText.text = "ÀÚµ¿¼öÈ®±â Á¦°Å";
+            autoGetText.text = "ìë™ìˆ˜í™•ê¸° ì œê±°";
         }
         else
         {
-            autoGetText.text = "ÀÚµ¿¼öÈ®±â ¼³Ä¡";
+            autoGetText.text = "ìë™ìˆ˜í™•ê¸° ì„¤ì¹˜";
         }
 
         fieldAndSeedAndGetText.GetComponentInParent<Button>().interactable = true;
@@ -159,52 +159,52 @@ public class FarmStatsUI : MonoBehaviour
         }
         if (farm.farmStats == FarmStats.Plan)
         {
-            fieldAndSeedAndGetText.text = $"¹ç °¥±â";
+            fieldAndSeedAndGetText.text = $"ë°­ ê°ˆê¸°";
         }
         else if (farm.farmStats == FarmStats.Field)
         {
-            fieldAndSeedAndGetText.text = $"¾¾¾Ñ ¼±ÅÃ";
+            fieldAndSeedAndGetText.text = $"ì”¨ì•— ì„ íƒ";
         }
         else if (farm.farmStats == FarmStats.Farm)
         {
-            fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+            fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
         }
         if (statsWindow.activeSelf)
         {
 
             if (farm.cropWeathers.Length > 0)
             {
-                farmNameText.text = $"ÀÛ¹° : {farm.seedType}";
+                farmNameText.text = $"ì‘ë¬¼ : {farm.seedType}";
                 string weathers = "";
                 foreach (var weather in farm.cropWeathers)
                 {
                     string ss = "";
                     if (weather == Weather.lucidity)
                     {
-                        ss = "¸¼À½";
+                        ss = "ë§‘ìŒ";
                     }
                     else if (weather == Weather.cloud)
                     {
-                        ss = "Èå¸²";
+                        ss = "íë¦¼";
                     }
                     else if (weather == Weather.rain)
                     {
-                        ss = "ºñ";
+                        ss = "ë¹„";
                     }
                     else if (weather == Weather.storm)
                     {
-                        ss = "ÆøÇ³";
+                        ss = "í­í’";
                     }
                     else if (weather == Weather.stone)
                     {
-                        ss = "¿ì¹Ú";
+                        ss = "ìš°ë°•";
                     }
                     weathers += ss;
                     weathers += ", ";
                 }
-                weathersText.text = $"ÀûÇÕ ³¯¾¾ : {weathers}";
-                timeText.text = $"½Ã°£´ë : {farm.cropMinTime}½Ã ~ {farm.cropMaxTime}½Ã";
-                humidityText.text = $"ÃÖÀû ½Àµµ : {farm.cropMinhumidity}% ~ {farm.cropMaxhumidity}%";
+                weathersText.text = $"ì í•© ë‚ ì”¨ : {weathers}";
+                timeText.text = $"ì‹œê°„ëŒ€ : {farm.cropMinTime}ì‹œ ~ {farm.cropMaxTime}ì‹œ";
+                humidityText.text = $"ìµœì  ìŠµë„ : {farm.cropMinhumidity}% ~ {farm.cropMaxhumidity}%";
             }
 
 
@@ -226,7 +226,8 @@ public class FarmStatsUI : MonoBehaviour
         else if (farm.farmStats == FarmStats.Plan)
         {
             farm.Feild();
-            fieldAndSeedAndGetText.text = $"¾¾¾Ñ ¼±ÅÃ";
+            GameManager.Instance.fatigue -= 2;
+            fieldAndSeedAndGetText.text = $"ì”¨ì•— ì„ íƒ";
         }
         else if (farm.farmStats == FarmStats.Field)
         {
@@ -235,7 +236,8 @@ public class FarmStatsUI : MonoBehaviour
         }
         else if (farm.farmStats == FarmStats.Farm)
         {
-            fieldAndSeedAndGetText.text = $"¹ç °¥±â";
+            fieldAndSeedAndGetText.text = $"ë°­ ê°ˆê¸°";
+            GameManager.Instance.fatigue -= 3;
             farm.FarmReset();
         }
     }
@@ -252,7 +254,7 @@ public class FarmStatsUI : MonoBehaviour
                     farm.Seed(SeedType.Broccoli);
                     farm.GrowthStage(GrowthStats.Seed);
                     farm.farmStats = FarmStats.Farm;
-                    fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+                    fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
                     fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
                     statsWindow.SetActive(true);
                     seedWindow.SetActive(false);
@@ -260,7 +262,7 @@ public class FarmStatsUI : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.Instance.messageUI.add("ºê·ÎÄİ¸®ÀÇ ¾¾¾ÑÀÌ ºÎÁ·ÇÕ´Ï´Ù",Color.red, true);
+                    GameManager.Instance.messageUI.add("ë¸Œë¡œì½œë¦¬ì˜ ì”¨ì•—ì´ ë¶€ì¡±í•©ë‹ˆë‹¤",Color.red, true);
                 }
                     break;
             case 2:
@@ -270,14 +272,14 @@ public class FarmStatsUI : MonoBehaviour
                     farm.Seed(SeedType.Carrot);
                     farm.GrowthStage(GrowthStats.Seed);
                     farm.farmStats = FarmStats.Farm;
-                    fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+                    fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
                     fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
                     statsWindow.SetActive(true);
                     seedWindow.SetActive(false);
                 }
                 else
                 {
-                    GameManager.Instance.messageUI.add("´ç±ÙÀÇ ¾¾¾ÑÀÌ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                    GameManager.Instance.messageUI.add("ë‹¹ê·¼ì˜ ì”¨ì•—ì´ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
                 }
                 break;
             case 3:
@@ -287,14 +289,14 @@ public class FarmStatsUI : MonoBehaviour
                     farm.Seed(SeedType.Cauiliflower);
                     farm.GrowthStage(GrowthStats.Seed);
                     farm.farmStats = FarmStats.Farm;
-                    fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+                    fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
                     fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
                     statsWindow.SetActive(true);
                     seedWindow.SetActive(false);
                 }
                 else
                 {
-                    GameManager.Instance.messageUI.add("¾ç¹èÃßÀÇ ¾¾¾ÑÀÌ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                    GameManager.Instance.messageUI.add("ì–‘ë°°ì¶”ì˜ ì”¨ì•—ì´ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
                 }
                 break;
             case 4:
@@ -304,14 +306,14 @@ public class FarmStatsUI : MonoBehaviour
                     farm.Seed(SeedType.Corn);
                     farm.GrowthStage(GrowthStats.Seed);
                     farm.farmStats = FarmStats.Farm;
-                    fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+                    fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
                     fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
                     statsWindow.SetActive(true);
                     seedWindow.SetActive(false);
                 }
                 else
                 {
-                    GameManager.Instance.messageUI.add("¿Á¼ö¼öÀÇ ¾¾¾ÑÀÌ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                    GameManager.Instance.messageUI.add("ì˜¥ìˆ˜ìˆ˜ì˜ ì”¨ì•—ì´ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
                 }
                 break;
             case 5:
@@ -321,14 +323,14 @@ public class FarmStatsUI : MonoBehaviour
                     farm.Seed(SeedType.Mashroom);
                     farm.GrowthStage(GrowthStats.Seed);
                     farm.farmStats = FarmStats.Farm;
-                    fieldAndSeedAndGetText.text = $"¼öÈ® ÇÏ±â";
+                    fieldAndSeedAndGetText.text = $"ìˆ˜í™• í•˜ê¸°";
                     fieldAndSeedAndGetText.transform.GetComponentInParent<Button>().interactable = false;
                     statsWindow.SetActive(true);
                     seedWindow.SetActive(false);
                 }
                 else
                 {
-                    GameManager.Instance.messageUI.add("¹ö¼¸ÀÇ ¾¾¾ÑÀÌ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                    GameManager.Instance.messageUI.add("ë²„ì„¯ì˜ ì”¨ì•—ì´ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
                 }
                 break;
         }
@@ -339,6 +341,7 @@ public class FarmStatsUI : MonoBehaviour
     {
         if (GameManager.Instance.watergunCount > 0)
         {
+            GameManager.Instance.fatigue -= 3;
             GameManager.Instance.watergunCount--;
             if (GameManager.Instance.nomalWatergun)
             {
@@ -357,7 +360,7 @@ public class FarmStatsUI : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.messageUI.add("¹°ÀÌ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+            GameManager.Instance.messageUI.add("ë¬¼ì´ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
         }
 
     }
@@ -372,7 +375,8 @@ public class FarmStatsUI : MonoBehaviour
     {
         if (farm.tile.greenhouse)
         {
-            greenHouseText.text = "ºñ´ÒÇÏ¿ì½º ¼³Ä¡";
+            GameManager.Instance.fatigue -= 1;
+            greenHouseText.text = "ë¹„ë‹í•˜ìš°ìŠ¤ ì„¤ì¹˜";
             farm.tile.greenhouse = false;
             farm.tile.greenHouseObject.SetActive(false);
         }
@@ -380,14 +384,15 @@ public class FarmStatsUI : MonoBehaviour
         {
             if (GameManager.Instance.greenHouseCount > 0)
             {
+                GameManager.Instance.fatigue -= 1;
                 GameManager.Instance.greenHouseCount--;
-                greenHouseText.text = "ºñ´ÒÇÏ¿ì½º Á¦°Å";
+                greenHouseText.text = "ë¹„ë‹í•˜ìš°ìŠ¤ ì œê±°";
                 farm.tile.greenhouse = true;
                 farm.tile.greenHouseObject.SetActive(true);
             }
             else
             {
-                GameManager.Instance.messageUI.add("ºñ´ÒÇÏ¿ì½º°¡ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                GameManager.Instance.messageUI.add("ë¹„ë‹í•˜ìš°ìŠ¤ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
             }
         }
     }
@@ -396,7 +401,8 @@ public class FarmStatsUI : MonoBehaviour
     {
         if (farm.tile.autoGet)
         {
-            autoGetText.text = "ÀÚµ¿¼öÈ®±â ¼³Ä¡";
+            GameManager.Instance.fatigue -= 1;
+            autoGetText.text = "ìë™ìˆ˜í™•ê¸° ì„¤ì¹˜";
             farm.tile.autoGet = false;
             farm.tile.autoGetObject.SetActive(false);
         }
@@ -408,8 +414,9 @@ public class FarmStatsUI : MonoBehaviour
             }
             if (GameManager.Instance.autoGetCount > 0)
             {
+                GameManager.Instance.fatigue -= 1;
                 GameManager.Instance.autoGetCount--;
-                autoGetText.text = "ÀÚµ¿¼öÈ®±â Á¦°Å";
+                autoGetText.text = "ìë™ìˆ˜í™•ê¸° ì œê±°";
                 farm.tile.autoGetObject = farm.autoGetObject;
                 farm.farmStats = FarmStats.autoGet;
                 farm.tile.autoGetObject.SetActive(true);
@@ -417,7 +424,7 @@ public class FarmStatsUI : MonoBehaviour
             }
             else
             {
-                GameManager.Instance.messageUI.add("ÀÚµ¿¼öÈ®±â°¡ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+                GameManager.Instance.messageUI.add("ìë™ìˆ˜í™•ê¸°ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
             }
         }
     }
@@ -426,6 +433,7 @@ public class FarmStatsUI : MonoBehaviour
     {
         if(GameManager.Instance.animalGetCount > 0)
         {
+            GameManager.Instance.fatigue -= 2;
             int count = Random.Range(1, 4);
             for (int i = 0; i < count; i++)
             {
@@ -442,7 +450,7 @@ public class FarmStatsUI : MonoBehaviour
             {
                 GameManager.Instance.animalGetCount--;
                 GameManager.Instance.animalDestroyPercent = 0;
-                GameManager.Instance.messageUI.add("Æ÷È¹±â°¡ ÆÄ±«µÇ¾ú½À´Ï´Ù", Color.red, true);
+                GameManager.Instance.messageUI.add("í¬íšê¸°ê°€ íŒŒê´´ë˜ì—ˆìŠµë‹ˆë‹¤", Color.red, true);
             }
             else
             {
@@ -451,7 +459,7 @@ public class FarmStatsUI : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.messageUI.add("Æ÷È¹±â°¡ ºÎÁ·ÇÕ´Ï´Ù", Color.red, true);
+            GameManager.Instance.messageUI.add("í¬íšê¸°ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤", Color.red, true);
         }
     }
 }

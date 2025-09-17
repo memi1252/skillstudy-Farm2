@@ -50,6 +50,29 @@ public class Bed : MonoBehaviour
             GameManager.Instance.inGameTime += 3600;
             yield return new WaitForSecondsRealtime(1);
         }
+
+        if (GameManager.Instance.doubleLucidity)
+        {
+            if (TimeSlider.value >= 10)
+            {
+                GameManager.Instance.fatigue += (10 * 10) + 30;
+            }
+            else
+            {
+                GameManager.Instance.fatigue += (10 * TimeSlider.value) + 30;
+            }
+        }else
+        {
+            if (TimeSlider.value >= 10)
+            {
+                GameManager.Instance.fatigue += 10 * 10;
+            }
+            else
+            {
+                GameManager.Instance.fatigue += 10 * TimeSlider.value;
+            }
+        }
+        
         view = false;
         on = false;
         timeView.SetActive(false);

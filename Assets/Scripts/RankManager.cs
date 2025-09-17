@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -46,11 +47,18 @@ public class RankManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Load();
+    }
+
     public void Save()
     {
         RankDataList dataList = new RankDataList();
         dataList.rankDataList = data;
-
+        
+        Debug.Log(data);
+        Debug.Log(dataList);
         string json = JsonUtility.ToJson(dataList);
 
 #if UNITY_EDITOR
@@ -72,16 +80,9 @@ public class RankManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             RankDataList dataList = JsonUtility.FromJson<RankDataList>(json);
-            if(data.Count > 0)
-            {
-                data.Clear();
-                data = dataList.rankDataList;
-                data = data.OrderByDescending(n => (n.Time)).ToList();
-            }
-            else
-            {
-                Save();
-            }
+            data.Clear();
+            data = dataList.rankDataList;
+            data =data.OrderBy(x => x.Time).ToList();
         }
         else
         {
@@ -94,6 +95,8 @@ public class RankManager : MonoBehaviour
         RankData data = new RankData();
         data.Name = name;
         data.Time = time;
+        this.data.Add(data);
+        Save();
     }
 
     public void RankUIOpen()
@@ -114,13 +117,12 @@ public class RankManager : MonoBehaviour
             {
                 return;
             }
-            var slotObj = Instantiate(rankSlot);
-            slotObj.transform.SetParent(rankPenal);
+            var slotObj = Instantiate(rankSlot, rankPenal, true);
             if(slotObj.TryGetComponent<RankSlot>(out var slot))
             {
                 slot.Set(index, rankData.Name, rankData.Time);
-                rankSlotList.Add(slotObj);
             }
+            rankSlotList.Add(slotObj);
             index++;
         }
     }

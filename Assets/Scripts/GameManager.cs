@@ -17,9 +17,11 @@ public enum Weather
 [System.Serializable]
 public struct farmPrice
 {
+    public string name;
     public int maxPrice;
     public int minPrice;
     public int price;
+    public int add;
 }
 
 public class GameManager : MonoBehaviour
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Weather currentWeather;
+    public Weather nextWeather;
 
     public int money = 0;
 
@@ -36,6 +39,10 @@ public class GameManager : MonoBehaviour
     public int watergunMaxCount2 = 20;
 
     public bool nomalGet = true;
+    public bool doubleLucidity = false;
+    public bool sleep = false;
+    public bool dontMove = false;
+    public bool clear = false;
 
 
     public int greenHouseCount = 0;
@@ -47,14 +54,17 @@ public class GameManager : MonoBehaviour
     public int farm1, farm2, farm3, farm4, farm5;
     public farmPrice[] farmPrices;
 
+    public float playTime = 0;
     public float inGameTime = 0;
     public int hour;
     public int minute;
+    public int second;
 
     public int tilePrice = 0;
 
     public FarmStatsUI farmStatsUI;
     public MessageUI messageUI;
+    public Player player;
     public GameObject[] allTile;
 
     private void Awake()
@@ -71,12 +81,61 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //CursorShow(false);
+        int WeatherIndex = Random.Range(0, 5);
+        doubleLucidity = false;
+        switch (WeatherIndex)
+        {
+            case 0:
+                currentWeather = Weather.lucidity;
+                break;
+            case 1:
+                currentWeather = Weather.cloud;
+                break;
+            case 2:
+                currentWeather = Weather.rain;
+                break;
+            case 3:
+                currentWeather = Weather.storm;
+                break;
+            case 4:
+                currentWeather = Weather.stone;
+                break;
+        }
+        WeatherIndex = Random.Range(0, 5);
+        switch (WeatherIndex)
+        {
+            case 0:
+                nextWeather = Weather.lucidity;
+                break;
+            case 1:
+                nextWeather = Weather.cloud;
+                break;
+            case 2:
+                nextWeather = Weather.rain;
+                break;
+            case 3:
+                nextWeather = Weather.storm;
+                break;
+            case 4:
+                nextWeather = Weather.stone;
+                break;
+        }
     }
 
     private void Update()
     {
-        inGameTime += Time.deltaTime * 60 *12;
+        if(money >= 1000000)
+        {
+            clear = true;
+        }
+        if (!sleep || !clear)
+        {
+            inGameTime += Time.deltaTime * 60 * 12;
+        }
+        if (!clear)
+        {
+            playTime += Time.deltaTime;
+        }
         if(inGameTime >= 86400)
         {
 
@@ -86,10 +145,12 @@ public class GameManager : MonoBehaviour
                 if (farmPrices[i].price == farmPrices[i].minPrice)
                 {
                     farmPrices[i].price += add;
+                    farmPrices[i].add = add;
                 }
                 else if (farmPrices[i].price == farmPrices[i].maxPrice)
                 {
                     farmPrices[i].price -= add;
+                    farmPrices[i].add = -add;
                 }
                 else
                 {
@@ -114,27 +175,35 @@ public class GameManager : MonoBehaviour
             
             inGameTime = 0;
             int WeatherIndex = Random.Range(0, 5);
+            Weather dd = currentWeather;
+            currentWeather = nextWeather;
+            doubleLucidity = false;
             switch (WeatherIndex)
             {
                 case 0:
-                    currentWeather = Weather.lucidity;
+                    nextWeather = Weather.lucidity;
                     break;
                 case 1:
-                    currentWeather = Weather.cloud;
+                    nextWeather = Weather.cloud;
                     break;
                 case 2:
-                    currentWeather = Weather.rain;
+                    nextWeather = Weather.rain;
                     break;
                 case 3:
-                    currentWeather = Weather.storm;
+                    nextWeather = Weather.storm;
                     break;
                 case 4:
-                    currentWeather = Weather.stone;
+                    nextWeather = Weather.stone;
                     break;
+            }
+            if(dd == Weather.lucidity && currentWeather == Weather.lucidity)
+            {
+                doubleLucidity = true;
             }
         }
         hour = (int)(inGameTime / 3600);
         minute = (int)((inGameTime % 3600)/60);
+        second = (int)((inGameTime % 3600)%60);
     }
 
     public void CursorShow(bool show)

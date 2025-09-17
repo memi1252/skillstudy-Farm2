@@ -72,7 +72,7 @@ public class FarmStatsUI : MonoBehaviour
                 humidityText.text = $"최적 습도 : {farm.cropMinhumidity}% ~ {farm.cropMaxhumidity}%";
                 if (farm.growCheck())
                 {
-                    growSpeedText.text = $"성장 속도 : 0";
+                    growSpeedText.text = $"성장 속도 : 1";
                 }
                 else if (farm.tile.humidity <= 30 || farm.tile.humidity >= 80)
                 {
@@ -97,6 +97,11 @@ public class FarmStatsUI : MonoBehaviour
                         case Weather.stone:
                             growSpeedText.text = $"성장 속도 : 1";
                             break;
+                    }
+
+                    if (!farm.growCheck())
+                    {
+                        growSpeedText.text = $"성장 속도 : 0";
                     }
                 }
 

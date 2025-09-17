@@ -111,6 +111,10 @@ public class Farm : MonoBehaviour
         
         if (farmStats == FarmStats.Farm)
         {
+            if (GameManager.Instance.clear)
+            {
+                return;
+            }
             if (growCheck())
             {
                 if(tile.animalCount != 0 && !tile.greenhouse)

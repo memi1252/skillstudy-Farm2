@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
         CameraMove();
     }
 
@@ -29,6 +28,10 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
+        if(GameManager.Instance.dontMove || GameManager.Instance.clear)
+        {
+            return;
+        }
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -45,6 +48,10 @@ public class Player : MonoBehaviour
 
     public void CameraMove()
     {
+        if (GameManager.Instance.dontMove || GameManager.Instance.clear)
+        {
+            return;
+        }
         if (Input.GetMouseButton(1))
         {
             float xMouse = Input.GetAxis("Mouse X");

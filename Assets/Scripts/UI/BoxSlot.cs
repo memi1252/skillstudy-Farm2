@@ -106,7 +106,7 @@ public class BoxSlot : MonoBehaviour
                 if (GameManager.Instance.farm1 >= count)
                 {
                     GameManager.Instance.farm1 -= count;
-                    GameManager.Instance.money += GameManager.Instance.farmPrices[0].price;
+                    GameManager.Instance.money += GameManager.Instance.farmPrices[0].price * count;
                 }
                 else 
                 {
@@ -117,7 +117,7 @@ public class BoxSlot : MonoBehaviour
                 if (GameManager.Instance.farm2 >= count)
                 {
                     GameManager.Instance.farm2 -= count;
-                    GameManager.Instance.money += GameManager.Instance.farmPrices[1].price;
+                    GameManager.Instance.money += GameManager.Instance.farmPrices[1].price * count;
                 }
                 else
                 {
@@ -128,7 +128,7 @@ public class BoxSlot : MonoBehaviour
                 if (GameManager.Instance.farm3 >= count)
                 {
                     GameManager.Instance.farm3 -= count;
-                    GameManager.Instance.money += GameManager.Instance.farmPrices[2].price;
+                    GameManager.Instance.money += GameManager.Instance.farmPrices[2].price * count;
                 }
                 else
                 {
@@ -139,7 +139,7 @@ public class BoxSlot : MonoBehaviour
                 if (GameManager.Instance.farm4 >= count)
                 {
                     GameManager.Instance.farm4 -= count;
-                    GameManager.Instance.money += GameManager.Instance.farmPrices[3].price;
+                    GameManager.Instance.money += GameManager.Instance.farmPrices[3].price * count;
                 }
                 else
                 {
@@ -150,7 +150,7 @@ public class BoxSlot : MonoBehaviour
                 if (GameManager.Instance.farm5 >= count)
                 {
                     GameManager.Instance.farm5 -= count;
-                    GameManager.Instance.money += GameManager.Instance.farmPrices[3].price;
+                    GameManager.Instance.money += GameManager.Instance.farmPrices[3].price * count;
                 }
                 else
                 {
